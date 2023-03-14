@@ -1,6 +1,64 @@
 #!/bin/env python3
 
 import random
+
+stages = ['''
+  +---+
+  |   |
+  O   |
+ /|\  |
+ / \  |
+      |
+=========
+''', '''
+  +---+
+  |   |
+  O   |
+ /|\  |
+ /    |
+      |
+=========
+''', '''
+  +---+
+  |   |
+  O   |
+ /|\  |
+      |
+      |
+=========
+''', '''
+  +---+
+  |   |
+  O   |
+ /|   |
+      |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+  |   |
+      |
+      |
+=========
+''', '''
+  +---+
+  |   |
+  O   |
+      |
+      |
+      |
+=========
+''', '''
+  +---+
+  |   |
+      |
+      |
+      |
+      |
+=========
+''']
+
 word_list = ["aardvark", "baboon", "camel"]
 chosen_word = random.choice(word_list)
 
@@ -15,11 +73,19 @@ display = ['_' for _ in range(len(chosen_word))]
 
 # Use a while loop to let the user guess again. The loop should only stop once the user has guessed all the letters in the chosen_word and 'display' has no more blanks ("_"). Then you can tell the user they've won.
 
-while '_' in display:
+lives_left = 6
+while '_' in display and lives_left > 0:
     guess = input("Guess a letter: ").lower()
-    for index, letter in enumerate(chosen_word):
-        if letter == guess:
-            display[index] = letter
+    if guess in chosen_word:
+        for index, letter in enumerate(chosen_word):
+            if letter == guess:
+                display[index] = letter
+    else:
+        lives_left -= 1
     print(display)
+    print(stages[lives_left])
 
-print("You win.")
+if lives_left==0:
+    print('You lose.')
+else:
+    print("You win.")
