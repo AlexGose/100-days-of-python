@@ -7,7 +7,7 @@ import hangman_art
 chosen_word = random.choice(hangman_words.word_list)
 
 #Testing code
-print(f'Pssst, the solution is {chosen_word}.')
+#print(f'Pssst, the solution is {chosen_word}.')
 
 display = ['_' for _ in range(len(chosen_word))]
 
@@ -26,7 +26,7 @@ while '_' in display and lives_left > 0:
                 if letter == guess:
                     display[index] = letter
         else:
-            lose_message = f"You guessed {guess}. That's not in the word. "
+            lose_message = f"You guessed '{guess}'. That's not in the word. "
             lose_message += "You lose a life."
             print(lose_message)
             lives_left -= 1
@@ -34,6 +34,6 @@ while '_' in display and lives_left > 0:
         print(hangman_art.stages[lives_left])
 
 if lives_left==0:
-    print('You lose.')
+    print(f'You lose. The word was "{chosen_word}".')
 else:
     print("You win.")
