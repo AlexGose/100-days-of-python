@@ -1,6 +1,7 @@
 #!/bin/env python3
 
 import random
+import hangman_words
 
 stages = ['''
   +---+
@@ -59,8 +60,7 @@ stages = ['''
 =========
 ''']
 
-word_list = ["aardvark", "baboon", "camel"]
-chosen_word = random.choice(word_list)
+chosen_word = random.choice(hangman_words.word_list)
 
 #Testing code
 print(f'Pssst, the solution is {chosen_word}.')
