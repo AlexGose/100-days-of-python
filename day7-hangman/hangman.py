@@ -9,27 +9,29 @@ chosen_word = random.choice(hangman_words.word_list)
 #Testing code
 print(f'Pssst, the solution is {chosen_word}.')
 
-# Create an empty List called display.
-#For each letter in the chosen_word, add a "_" to 'display'.
-#So if the chosen_word was "apple", display should be 
-# ["_", "_", "_", "_", "_"] with 5 "_" representing each letter to guess.
 display = ['_' for _ in range(len(chosen_word))]
-
-# Use a while loop to let the user guess again. The loop should only stop once the user has guessed all the letters in the chosen_word and 'display' has no more blanks ("_"). Then you can tell the user they've won.
 
 print(hangman_art.logo)
 print()
 lives_left = 6
+guessed_letters = ''
 while '_' in display and lives_left > 0:
     guess = input("Guess a letter: ").lower()
-    if guess in chosen_word:
-        for index, letter in enumerate(chosen_word):
-            if letter == guess:
-                display[index] = letter
+    if guess in guessed_letters:
+        print(f"You've already guessed {guess}.")
     else:
-        lives_left -= 1
-    print(display)
-    print(hangman_art.stages[lives_left])
+        guessed_letters += guess
+        if guess in chosen_word:
+            for index, letter in enumerate(chosen_word):
+                if letter == guess:
+                    display[index] = letter
+        else:
+            lose_message = f"You guessed {guess}. That's not in the word. "
+            lose_message += "You lose a life."
+            print(lose_message)
+            lives_left -= 1
+        print(' '.join(display))
+        print(hangman_art.stages[lives_left])
 
 if lives_left==0:
     print('You lose.')
