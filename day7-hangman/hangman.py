@@ -2,63 +2,7 @@
 
 import random
 import hangman_words
-
-stages = ['''
-  +---+
-  |   |
-  O   |
- /|\  |
- / \  |
-      |
-=========
-''', '''
-  +---+
-  |   |
-  O   |
- /|\  |
- /    |
-      |
-=========
-''', '''
-  +---+
-  |   |
-  O   |
- /|\  |
-      |
-      |
-=========
-''', '''
-  +---+
-  |   |
-  O   |
- /|   |
-      |
-      |
-=========''', '''
-  +---+
-  |   |
-  O   |
-  |   |
-      |
-      |
-=========
-''', '''
-  +---+
-  |   |
-  O   |
-      |
-      |
-      |
-=========
-''', '''
-  +---+
-  |   |
-      |
-      |
-      |
-      |
-=========
-''']
+import hangman_art
 
 chosen_word = random.choice(hangman_words.word_list)
 
@@ -73,6 +17,8 @@ display = ['_' for _ in range(len(chosen_word))]
 
 # Use a while loop to let the user guess again. The loop should only stop once the user has guessed all the letters in the chosen_word and 'display' has no more blanks ("_"). Then you can tell the user they've won.
 
+print(hangman_art.logo)
+print()
 lives_left = 6
 while '_' in display and lives_left > 0:
     guess = input("Guess a letter: ").lower()
@@ -83,7 +29,7 @@ while '_' in display and lives_left > 0:
     else:
         lives_left -= 1
     print(display)
-    print(stages[lives_left])
+    print(hangman_art.stages[lives_left])
 
 if lives_left==0:
     print('You lose.')
