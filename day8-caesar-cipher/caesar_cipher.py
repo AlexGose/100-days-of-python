@@ -16,12 +16,12 @@ def caesar(text, shift, direction):
             index = alphabet.index(letter)
             if direction.lower() == 'encode':
                 index += shift
-                index %= 26
             elif direction.lower() == 'decode':
                 index -= shift
             else:
                 print(f"You must choose either 'encode' or 'decode'")
                 exit(1)
+            index %= 26
             output += alphabet[index]
         else:
             output += ' '
