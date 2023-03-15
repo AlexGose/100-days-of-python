@@ -5,9 +5,6 @@ import art
 alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
 print(art.logo)
-direction = input("Type 'encode' to encrypt, type 'decode' to decrypt:\n")
-text = input("Type your message:\n").lower()
-shift = int(input("Type the shift number:\n"))
 
 def caesar(text, shift, direction):
     output = ''
@@ -27,4 +24,12 @@ def caesar(text, shift, direction):
             output += letter
     print(f"The {direction}d text is {output}")
 
-caesar(text, shift, direction)
+done = False
+while not done:
+    direction = input("Type 'encode' to encrypt, type 'decode' to decrypt:\n")
+    text = input("Type your message:\n").lower()
+    shift = int(input("Type the shift number:\n"))
+    caesar(text, shift, direction)
+    again = input("Run the program again? Type 'yes' or 'no':\n")
+    if again != 'yes':
+        done = True
