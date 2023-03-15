@@ -18,5 +18,21 @@ def encrypt(text, shift):
             output += ' '
     print(f"The encoded text is {output}")
 
+def decrypt(text, shift):
+    output = ''
+    for letter in text:
+        if letter != ' ':
+            index = alphabet.index(letter)
+            index -= shift
+            output += alphabet[index]
+        else:
+            output += ' '
+    print(f"The decoded text is {output}")
+
 if direction.lower() == 'encode':
     encrypt(text, shift)
+elif direction.lower() == 'decode':
+    decrypt(text, shift)
+else:
+    print("You must select either 'encode' or 'decode'")
+    exit(1)
