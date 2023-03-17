@@ -27,11 +27,11 @@ def calculator():
         '/':divide,
     }
 
-    num1 = int(input("What's the first number? "))
+    num1 = float(input("What's the first number? "))
     for symbol in operations:
         print(symbol)
     operation_symbol = input("Pick an operation from a line above: ")
-    num2 = int(input("What's the second number? "))
+    num2 = float(input("What's the second number? "))
 
     done = False
     while not done:
@@ -45,7 +45,7 @@ def calculator():
         if more == 'y':
             num1 = answer
             operation_symbol = input("Pick an operation: ")
-            num2 = int(input("What's the next number? "))
+            num2 = float(input("What's the next number? "))
         else:
             calculator()
 
