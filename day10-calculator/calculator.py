@@ -19,8 +19,7 @@ def divide(n1, n2):
     return n1 / n2
 
 
-if __name__ == '__main__':
-    print(logo)
+def calculator():
     operations = {
         '+':add,
         '-':subtract,
@@ -49,3 +48,8 @@ if __name__ == '__main__':
             num2 = int(input("What's the next number? "))
         else:
             done = True
+
+
+if __name__ == '__main__':
+    print(logo)
+    calculator()
