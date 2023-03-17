@@ -33,6 +33,19 @@ if __name__ == '__main__':
         print(symbol)
     operation_symbol = input("Pick an operation from a line above: ")
     num2 = int(input("What's the second number? "))
-    
-    answer = operations[operation_symbol](num1, num2)
-    print(f"{num1} {operation_symbol} {num2} = {answer}")
+
+    done = False
+    while not done:
+        answer = operations[operation_symbol](num1, num2)
+        print(f"{num1} {operation_symbol} {num2} = {answer}")
+        
+        more_message = f"type 'y' to continue calculating with {answer}, or type "
+        more_message += "'n' to exit. "
+        more = input(more_message)
+        
+        if more == 'y':
+            num1 = answer
+            operation_symbol = input("Pick an operation: ")
+            num2 = int(input("What's the next number? "))
+        else:
+            done = True
