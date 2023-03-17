@@ -39,7 +39,7 @@ def calculator():
         print(f"{num1} {operation_symbol} {num2} = {answer}")
         
         more_message = f"type 'y' to continue calculating with {answer}, or type "
-        more_message += "'n' to exit. "
+        more_message += "'n' to start a new calculation. "
         more = input(more_message)
         
         if more == 'y':
@@ -47,7 +47,7 @@ def calculator():
             operation_symbol = input("Pick an operation: ")
             num2 = int(input("What's the next number? "))
         else:
-            done = True
+            calculator()
 
 
 if __name__ == '__main__':
