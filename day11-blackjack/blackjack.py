@@ -18,8 +18,11 @@ def draw_card(cards):
 
 
 def print_cards(hands):
-    print(f"Your cards: {hands['player']}, current score: {get_score(hands,'player')}")
-    print(f"Computer's first card: {hands['dealer'][0]}")
+    your_hand_message = f"    Your cards: {hands['player']}, "
+    your_hand_message += f"current score: {get_score(hands,'player')}"
+    print(your_hand_message)
+    computer_hand_message = f"    Computer's first card: {hands['dealer'][0]}"
+    print(computer_hand_message)
 
 
 def hit_person(hands, cards, person):
@@ -39,8 +42,12 @@ def is_busted(hands, person):
 
 
 def print_final_hands(hands):
-    print(f"Your final hand: {hands['player']}, final score: {get_score(hands,'player')}")
-    print(f"Computer's final hand: {hands['dealer']}, final score: {get_score(hands, 'dealer')}")
+    your_hand_message = f"Your final hand: {hands['player']}, "
+    your_hand_message += f"final score: {get_score(hands,'player')}"
+    print(your_hand_message)
+    dealer_hand_message = f"Computer's final hand: {hands['dealer']}, "
+    dealer_hand_message += f"final score: {get_score(hands, 'dealer')}"
+    print(dealer_hand_message)
 
 
 def print_winner(hands):
