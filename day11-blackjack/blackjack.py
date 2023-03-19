@@ -44,15 +44,21 @@ def print_final_hands(hands):
 
 
 def print_winner(hands):
-    if is_busted(hands, 'player') or ( not is_busted(hands, 'dealer') and \
-            get_score(hands, 'dealer') > get_score(hands, 'player') ) or \
-            get_score(hands, 'dealer') == 21:
-        print('You lose.')
-    elif is_busted(hands, 'dealer') or \
-            get_score(hands, 'player') > get_score(hands, 'dealer'):
-        print('You win!')
+    if is_busted(hands, 'player'):
+        print('You busted. Sorry, you lose 😭')
+    elif get_score(hands, 'dealer') == 21 and len(hands['dealer']) == 2:
+        print('Dealer has a blackjack.  Sorry, you lose 😱')
+    elif get_score(hands, 'player') == 21 and len(hands['player']) == 2:
+        print('You have a blackjack.  You win! 😎')
+    elif not is_busted(hands, 'dealer') and \
+            get_score(hands, 'dealer') > get_score(hands, 'player'):
+        print('You lose 😤')
+    elif is_busted(hands, 'dealer'):
+        print('Dealer busts.  You win! 😁')
+    elif get_score(hands, 'player') > get_score(hands, 'dealer'):
+        print('You win! 😃')
     else:
-        print('Draw.')
+        print('Draw 🙃')
 
 
 def clear():
