@@ -20,6 +20,12 @@ def get_insta_pages(data):
     return data[A_index], data[B_index]
 
 
+def describe(insta_dict):
+    """Returns string with name, description, and country of instagram page"""
+    return f"{insta_dict['name']}, a {insta_dict['description']}, "\
+          +f"from {insta_dict['country']}"
+
+
 if __name__ == '__main__':
     print(logo)
 
@@ -29,11 +35,12 @@ if __name__ == '__main__':
         A_data, B_data = get_insta_pages(data)
 
         # temp test code
-        print(A_data)
-        print(B_data)
+        print(describe(A_data))
+        print(describe(B_data))
         break
 
         # Print the names of two instagram pages
+
 
         # Ask the user which instagram page has more followers
 
