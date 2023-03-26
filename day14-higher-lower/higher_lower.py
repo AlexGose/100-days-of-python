@@ -8,7 +8,7 @@ from random import randint
 def rand_indices(N):
     """Return two unordered random indices between 0 and N-1"""
     first_index = randint(0, N-1)
-    second_index = randint(0, N)
+    second_index = randint(0, N-2)
     if second_index >= first_index:
         second_index += 1
     return first_index, second_index
