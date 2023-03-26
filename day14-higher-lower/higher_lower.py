@@ -32,9 +32,24 @@ def print_comparison(A_dict, B_dict):
     print(f"Against B: {describe(B_dict)}.")
 
 
+def answer_is_correct(A_dict, B_dict, answer):
+    """
+    Return True if answer for most followers is correct, False otherwise
+    """
+    A_followers = int(A_dict['follower_count'])
+    B_followers = int(B_dict['follower_count'])
+    if answer == 'A' and A_followers >= B_followers:
+        return True
+    elif answer == 'B' and B_followers >= A_followers:
+        return True
+    else:
+        return False
+
+
 if __name__ == '__main__':
     print(logo)
 
+    score = 0
     done = False
     while not done:
         # Randomly select two instagram pages
@@ -45,8 +60,12 @@ if __name__ == '__main__':
 
         # Ask the user which instagram page has more followers
         choice = input("Who has more followers? Type 'A' or 'B': ").upper()
-        break # temp test code
 
         # If answer is correct, tell user and print current score
+        if answer_is_correct(A_data, B_data, choice):
+            score += 1
+            print(logo)
+            print(f"You're right! Current score: {score}.")
 
+        break # temp test code
         # If answer is wrong, tell user, print final score, and finish loop
