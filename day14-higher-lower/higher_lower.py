@@ -6,18 +6,27 @@ from random import randint
 from os import system
 
 
-def rand_indices(N):
-    """Return two unordered random indices between 0 and N-1"""
-    first_index = randint(0, N-1)
+def rand_indices(N, first_index=None):
+    """Return two unordered random indices between 0 and N-1, if 
+       `first_index == None`.  Otherwise, return a random index other
+       than first_index as the second index"""
+    if first_index == None:
+        first_index = randint(0, N-1)
     second_index = randint(0, N-2)
     if second_index >= first_index:
         second_index += 1
     return first_index, second_index
 
 
-def get_insta_pages(data):
-    """Return data for two unordered random instagram pages"""
-    A_index, B_index = rand_indices(len(data))
+def get_insta_pages(data, B_dict=None):
+    """Return dictionaries for two unordered random instagram pages, if
+       `B_dict == None`.  Otherwise, return B_dict as the first instagram page
+       and a random instagram page other than B_dict as the second"""
+    if B_dict == None:
+        A_index, B_index = rand_indices(len(data))
+    else:
+        B_index = data.index(B_dict)
+        A_index, B_index = rand_indices(len(data), first_index=B_index)
     return data[A_index], data[B_index]
 
 
@@ -54,11 +63,12 @@ def clear_screen():
 if __name__ == '__main__':
     print(logo)
 
+    B_data = None
     score = 0
     done = False
     while not done:
         # Randomly select two instagram pages
-        A_data, B_data = get_insta_pages(data)
+        A_data, B_data = get_insta_pages(data, B_data)
 
         # Print the names of two instagram pages
         print_comparison(A_data, B_data)
@@ -75,5 +85,5 @@ if __name__ == '__main__':
         else: # tell user, print final score, and finish loop
             clear_screen()
             print(logo)
-            print(f"Sorry, that's wrong.  Final score {score}.")
+            print(f"Sorry, that's wrong.  Final score: {score}.")
             done = True
