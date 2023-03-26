@@ -1,6 +1,6 @@
 #!/bin/env python3
 
-from art import logo
+from art import logo, vs
 from game_data import data
 from random import randint
 
@@ -26,6 +26,12 @@ def describe(insta_dict):
           +f"from {insta_dict['country']}"
 
 
+def print_comparison(A_dict, B_dict):
+    print(f"Compare A: {describe(A_dict)}.")
+    print(vs)
+    print(f"Against B: {describe(B_dict)}.")
+
+
 if __name__ == '__main__':
     print(logo)
 
@@ -34,13 +40,9 @@ if __name__ == '__main__':
         # Randomly select two instagram pages
         A_data, B_data = get_insta_pages(data)
 
-        # temp test code
-        print(describe(A_data))
-        print(describe(B_data))
-        break
-
         # Print the names of two instagram pages
-
+        print_comparison(A_data, B_data)
+        break # temp test code
 
         # Ask the user which instagram page has more followers
 
