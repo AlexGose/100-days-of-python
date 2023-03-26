@@ -66,6 +66,7 @@ if __name__ == '__main__':
             score += 1
             print(logo)
             print(f"You're right! Current score: {score}.")
-
-        break # temp test code
-        # If answer is wrong, tell user, print final score, and finish loop
+        else: # tell user, print final score, and finish loop
+            print(logo)
+            print(f"Sorry, that's wrong.  Final score {score}.")
+            done = True
