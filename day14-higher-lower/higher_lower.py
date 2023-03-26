@@ -42,9 +42,10 @@ if __name__ == '__main__':
 
         # Print the names of two instagram pages
         print_comparison(A_data, B_data)
-        break # temp test code
 
         # Ask the user which instagram page has more followers
+        choice = input("Who has more followers? Type 'A' or 'B': ").upper()
+        break # temp test code
 
         # If answer is correct, tell user and print current score
 
