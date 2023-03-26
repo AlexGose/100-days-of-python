@@ -3,6 +3,7 @@
 from art import logo, vs
 from game_data import data
 from random import randint
+from os import system
 
 
 def rand_indices(N):
@@ -46,6 +47,10 @@ def answer_is_correct(A_dict, B_dict, answer):
         return False
 
 
+def clear_screen():
+    system('clear')
+
+
 if __name__ == '__main__':
     print(logo)
 
@@ -64,9 +69,11 @@ if __name__ == '__main__':
         # If answer is correct, tell user and print current score
         if answer_is_correct(A_data, B_data, choice):
             score += 1
+            clear_screen()
             print(logo)
             print(f"You're right! Current score: {score}.")
         else: # tell user, print final score, and finish loop
+            clear_screen()
             print(logo)
             print(f"Sorry, that's wrong.  Final score {score}.")
             done = True
