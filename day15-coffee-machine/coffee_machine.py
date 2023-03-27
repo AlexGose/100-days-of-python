@@ -30,17 +30,23 @@ resources = {
     "coffee": 100,
 }
 
+money = 0
+
 if __name__ == '__main__':
     done = False
 
     while not done:
-        drink = input("What would you like? (espresso/latte/cappuccino): ")
+        drink = input("What would you like? (espresso/latte/cappuccino): ").lower()
 
         if drink == 'off': # hidden option for maintainers
             done = True
+        elif drink == 'report':
+            print(f"Water: {resources['water']}ml")
+            print(f"Milk: {resources['milk']}ml")
+            print(f"Coffee: {resources['coffee']}g")
+            print(f"Money: ${money:0.2f}")
         else:
-            print('not off')  # temp test code
-            # TODO: 3. 'report' prints resources
+            print(f"{drink=}")  # temp test code
 
             # TODO: 4. print message if insufficient resources after beverage choice
 
