@@ -40,6 +40,13 @@ def print_report():
     print(f"Money: ${money:0.2f}")
 
 
+def resource_is_sufficient(beverage, resource):
+    if beverage == 'espresso' and resource == 'milk':  # no milk ingredient
+        return True
+    else:
+        return resources[resource] >= MENU[beverage]['ingredients'][resource]
+
+
 if __name__ == '__main__':
     done = False
 
@@ -52,8 +59,12 @@ if __name__ == '__main__':
             print_report()
         else:
             print(f"{drink=}")  # temp test code
+            resources['water'] = 200 # temp test code
 
-            # TODO: 4. print message if insufficient resources after beverage choice
+            for ingredient in resources:
+                if not resource_is_sufficient(drink, ingredient):
+                    print(f"Sorry there is not enough {ingredient}.")
+
 
             # TODO: 5. if sufficient resources after choice, prompt for coins
 
