@@ -97,9 +97,9 @@ if __name__ == '__main__':
                 coins = get_coins()
 
                 payment = get_value(coins)
-                print(f"{payment=}")  # temp test code
 
-                # TODO: 7. print message if insufficient money and give refund
+                if payment < MENU[drink]['cost']:
+                    print("Sorry that's not enough money.  Money refunded.")
 
                 # TODO: 8. if sufficient money, give any change and add to revenue
 
