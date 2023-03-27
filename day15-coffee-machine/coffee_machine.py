@@ -32,19 +32,24 @@ resources = {
 
 money = 0
 
+
+def print_report():
+    print(f"Water: {resources['water']}ml")
+    print(f"Milk: {resources['milk']}ml")
+    print(f"Coffee: {resources['coffee']}g")
+    print(f"Money: ${money:0.2f}")
+
+
 if __name__ == '__main__':
     done = False
 
     while not done:
         drink = input("What would you like? (espresso/latte/cappuccino): ").lower()
 
-        if drink == 'off': # hidden option for maintainers
+        if drink == 'off':  # hidden option for maintainers
             done = True
         elif drink == 'report':
-            print(f"Water: {resources['water']}ml")
-            print(f"Milk: {resources['milk']}ml")
-            print(f"Coffee: {resources['coffee']}g")
-            print(f"Money: ${money:0.2f}")
+            print_report()
         else:
             print(f"{drink=}")  # temp test code
 
