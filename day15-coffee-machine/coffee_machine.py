@@ -31,26 +31,27 @@ resources = {
 }
 
 if __name__ == '__main__':
-    # temp test code
-    print(MENU)
-    print(resources)
+    done = False
 
-    # TODO: 1. prompt user for beverage choice
+    while not done:
+        drink = input("What would you like? (espresso/latte/cappuccino): ")
 
-    # TODO: 2. 'off' turns off the machine
+        if drink == 'off': # hidden option for maintainers
+            done = True
+        else:
+            print('not off')  # temp test code
+            # TODO: 3. 'report' prints resources
 
-    # TODO: 3. 'report' prints resources
+            # TODO: 4. print message if insufficient resources after beverage choice
 
-    # TODO: 4. print message if insufficient resources after beverage choice
+            # TODO: 5. if sufficient resources after choice, prompt for coins
 
-    # TODO: 5. if sufficient resources after choice, prompt for coins
+            # TODO: 6. process coins
 
-    # TODO: 6. process coins
+            # TODO: 7. print message if insufficient money and give refund
 
-    # TODO: 7. print message if insufficient money and give refund
+            # TODO: 8. if sufficient money, give any change and add to revenue
 
-    # TODO: 8. if sufficient money, give any change and add to revenue
+            # TODO: 9. Make coffee, deduct ingredients from inventory
 
-    # TODO: 9. Make coffee, deduct ingredients from inventory
-
-    # TODO: 10. Give beverage to customer
+            # TODO: 10. Give beverage to customer
