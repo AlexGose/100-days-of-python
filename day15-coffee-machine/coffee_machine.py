@@ -47,6 +47,20 @@ def resource_is_sufficient(beverage, resource):
         return resources[resource] >= MENU[beverage]['ingredients'][resource]
 
 
+def resources_are_sufficient(beverage):
+    for resource in resources:
+        if not resource_is_sufficient(beverage, resource):
+            return False
+    return True
+
+
+def get_coins():
+    output = {'quarters': 0, 'dimes': 0, 'nickles': 0, 'pennies': 0}
+    for coin in output:
+        output[coin] = int(input(f"how many {coin}? "))
+    return output
+
+
 if __name__ == '__main__':
     done = False
 
@@ -59,21 +73,22 @@ if __name__ == '__main__':
             print_report()
         else:
             print(f"{drink=}")  # temp test code
-            resources['water'] = 200 # temp test code
+            resources['water'] = 200  # temp test code
 
             for ingredient in resources:
                 if not resource_is_sufficient(drink, ingredient):
                     print(f"Sorry there is not enough {ingredient}.")
 
+            if resources_are_sufficient(drink):
+                # TODO: 5. if sufficient resources after choice, prompt for coins
+                coins = get_coins()
 
-            # TODO: 5. if sufficient resources after choice, prompt for coins
+                # TODO: 6. process coins
 
-            # TODO: 6. process coins
+                # TODO: 7. print message if insufficient money and give refund
 
-            # TODO: 7. print message if insufficient money and give refund
+                # TODO: 8. if sufficient money, give any change and add to revenue
 
-            # TODO: 8. if sufficient money, give any change and add to revenue
+                # TODO: 9. Make coffee, deduct ingredients from inventory
 
-            # TODO: 9. Make coffee, deduct ingredients from inventory
-
-            # TODO: 10. Give beverage to customer
+                # TODO: 10. Give beverage to customer
