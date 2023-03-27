@@ -113,4 +113,4 @@ if __name__ == '__main__':
 
                     make_coffee(drink)
 
-                    print(f"Here is your {drink}.  Enjoy!")
+                    print(f"Here is your {drink}.  ☕ Enjoy!")
