@@ -61,6 +61,20 @@ def get_coins():
     return output
 
 
+def get_value(coins_dict):
+    value = 0
+    for coin in coins_dict:
+        if coin == 'quarters':
+            value += 0.25 * coins_dict[coin]
+        elif coin == 'dimes':
+            value += 0.10 * coins_dict[coin]
+        elif coin == 'nickles':
+            value += 0.05 * coins_dict[coin]
+        elif coin == 'pennies':
+            value += 0.01 * coins_dict[coin]
+    return value
+
+
 if __name__ == '__main__':
     done = False
 
@@ -80,10 +94,10 @@ if __name__ == '__main__':
                     print(f"Sorry there is not enough {ingredient}.")
 
             if resources_are_sufficient(drink):
-                # TODO: 5. if sufficient resources after choice, prompt for coins
                 coins = get_coins()
 
-                # TODO: 6. process coins
+                payment = get_value(coins)
+                print(f"{payment=}")  # temp test code
 
                 # TODO: 7. print message if insufficient money and give refund
 
