@@ -100,9 +100,11 @@ if __name__ == '__main__':
 
                 if payment < MENU[drink]['cost']:
                     print("Sorry that's not enough money.  Money refunded.")
+                else:
+                    refund = payment - MENU[drink]['cost']
+                    money += MENU[drink]['cost']
+                    print(f"Here is ${refund:0.2f} in change.")
 
-                # TODO: 8. if sufficient money, give any change and add to revenue
+                    # TODO: 9. Make coffee, deduct ingredients from inventory
 
-                # TODO: 9. Make coffee, deduct ingredients from inventory
-
-                # TODO: 10. Give beverage to customer
+                    # TODO: 10. Give beverage to customer
