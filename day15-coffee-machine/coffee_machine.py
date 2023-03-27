@@ -75,6 +75,15 @@ def get_value(coins_dict):
     return value
 
 
+def make_coffee(beverage):
+    """
+    Reduces inventory levels in accordance with making the input beverage
+    """
+    for resource in resources:
+        if beverage != 'espresso' or resource != 'milk':  # espresso has no milk ingredient
+            resources[resource] -= MENU[beverage]['ingredients'][resource]
+
+
 if __name__ == '__main__':
     done = False
 
@@ -86,9 +95,6 @@ if __name__ == '__main__':
         elif drink == 'report':
             print_report()
         else:
-            print(f"{drink=}")  # temp test code
-            resources['water'] = 200  # temp test code
-
             for ingredient in resources:
                 if not resource_is_sufficient(drink, ingredient):
                     print(f"Sorry there is not enough {ingredient}.")
@@ -105,6 +111,6 @@ if __name__ == '__main__':
                     money += MENU[drink]['cost']
                     print(f"Here is ${refund:0.2f} in change.")
 
-                    # TODO: 9. Make coffee, deduct ingredients from inventory
+                    make_coffee(drink)
 
-                    # TODO: 10. Give beverage to customer
+                    print(f"Here is your {drink}.  Enjoy!")
