@@ -16,3 +16,10 @@ while not done:
     elif drink == 'report':
         cm.report()
         mm.report()
+    else:
+        mi = m.find_drink(drink)
+        cm.resources['water'] = 200  # temp test code
+        if cm.is_resource_sufficient(mi):
+            pass
+
+
