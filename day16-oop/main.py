@@ -11,5 +11,8 @@ done = False
 while not done:
     drink = input(f"What would you like? ({m.get_items()}): ").lower()
 
-    if drink == 'off':
+    if drink == 'off':  # hidden option for maintainers
         done = True
+    elif drink == 'report':
+        cm.report()
+        mm.report()
