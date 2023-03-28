@@ -28,6 +28,12 @@ Activate the virtual environment:
 source venv/bin/activate
 ```
 
+Install the required packages:
+
+```
+pip install -r requirements.txt
+```
+
 You can close the virtual environment when you are done:
 
 ```
