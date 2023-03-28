@@ -2,6 +2,7 @@ from menu import Menu, MenuItem
 from coffee_maker import CoffeeMaker
 from money_machine import MoneyMachine
 
+
 cm = CoffeeMaker()
 mm = MoneyMachine()
 m = Menu()
@@ -18,8 +19,8 @@ while not done:
         mm.report()
     else:
         mi = m.find_drink(drink)
-        cm.resources['water'] = 200  # temp test code
         if cm.is_resource_sufficient(mi):
-            pass
+            if mm.make_payment(mi.cost):
+                cm.make_coffee(mi)
 
 
