@@ -8,3 +8,6 @@ class QuizBrain:
                             + f"(True/False)?: ")
         self.question_number += 1
         return user_answer
+
+    def still_has_questions(self):
+        return self.question_number < len(self.question_list)
