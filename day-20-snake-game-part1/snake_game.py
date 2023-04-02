@@ -1,17 +1,22 @@
 #!/usr/bin/env python3
 
-from turtle import Turtle, Screen
+from turtle import Screen
+from snake import Snake
+import time
 
 screen = Screen()
 screen.setup(width=600, height=600)
 screen.bgcolor("black")
 screen.title("Snake Game")
+screen.tracer(0)
 
-turtles = []  # initialize with 3 white squares
-for turtle_index in range(3):
-    next_turtle = Turtle(shape='square')
-    next_turtle.color('white')
-    next_turtle.setx(next_turtle.xcor() - 20 * turtle_index)
-    turtles.append(next_turtle)
+snake = Snake()
+
+game_is_on = True
+while game_is_on:
+    screen.update()
+    time.sleep(0.1)
+
+    snake.move()
 
 screen.exitonclick()
