@@ -10,12 +10,15 @@ class Snake:
     def __init__(self):
         self.segments = []  # initialize with 3 white squares
         for turtle_index in range(3):
-            next_turtle = Turtle(shape='square')
-            next_turtle.color('white')
-            next_turtle.penup()
-            next_turtle.setx(next_turtle.xcor() - 20 * turtle_index)
-            self.segments.append(next_turtle)
+            self.add_segment(- 20 * turtle_index, 0)
         self.head = self.segments[0]
+
+    def add_segment(self, x, y):
+        next_turtle = Turtle(shape='square')
+        next_turtle.color('white')
+        next_turtle.penup()
+        next_turtle.goto(x, y)
+        self.segments.append(next_turtle)
 
     def move(self):
         for seg_num in range(len(self.segments) - 1, 0, -1):
