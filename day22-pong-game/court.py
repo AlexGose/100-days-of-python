@@ -15,6 +15,7 @@ class Court:
         self.screen.title("Pong")
         self.screen.bgcolor("black")
         self.screen.setup(width=WIDTH, height=HEIGHT)
+        self.screen.tracer(0)
 
     def exit_on_click(self):
         self.screen.exitonclick()
@@ -24,3 +25,6 @@ class Court:
 
     def on_key(self, fun, key):
         self.screen.onkey(fun, key)
+
+    def update(self):
+        self.screen.update()

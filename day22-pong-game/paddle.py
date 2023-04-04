@@ -27,7 +27,7 @@ class Paddle(Turtle):
         self.court.on_key(self.move_down, "Down")
 
     def draw_paddle(self):
-        self.hideturtle()
+        # self.hideturtle()
         self.speed("fastest")
         self.shape("square")
         self.shapesize(stretch_wid=WIDTH, stretch_len=LENGTH)
@@ -35,4 +35,4 @@ class Paddle(Turtle):
         self.penup()
         self.goto(350, 0)
         self.setheading(90)
-        self.showturtle()
+        # self.showturtle()
