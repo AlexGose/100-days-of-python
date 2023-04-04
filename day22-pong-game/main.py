@@ -4,7 +4,8 @@ from court import Court
 from paddle import Paddle
 
 court = Court()
-paddle = Paddle(court)
+r_paddle = Paddle(court, "Up", "Down", 350, 0)
+l_paddle = Paddle(court, "w", "s", -350, 0)
 
 game_is_on = True
 

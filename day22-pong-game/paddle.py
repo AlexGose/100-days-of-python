@@ -7,9 +7,13 @@ SPEED = 20
 
 class Paddle(Turtle):
 
-    def __init__(self, court):
+    def __init__(self, court, up_key, down_key, x, y):
         super().__init__()
         self.court = court
+        self.up_key = up_key
+        self.down_key = down_key
+        self.x = x
+        self.y = y
         self.draw_paddle()
         self.add_key_movements()
 
@@ -23,16 +27,14 @@ class Paddle(Turtle):
 
     def add_key_movements(self):
         self.court.listen()
-        self.court.on_key(self.move_up, "Up")
-        self.court.on_key(self.move_down, "Down")
+        self.court.on_key(self.move_up, self.up_key)
+        self.court.on_key(self.move_down, self.down_key)
 
     def draw_paddle(self):
-        # self.hideturtle()
         self.speed("fastest")
         self.shape("square")
         self.shapesize(stretch_wid=WIDTH, stretch_len=LENGTH)
         self.color("white")
         self.penup()
-        self.goto(350, 0)
+        self.goto(self.x, self.y)
         self.setheading(90)
-        # self.showturtle()
