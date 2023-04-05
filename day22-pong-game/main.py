@@ -8,7 +8,7 @@ import time
 court = Court()
 r_paddle = Paddle(court, "Up", "Down", 350, 0)
 l_paddle = Paddle(court, "w", "s", -350, 0)
-ball = Ball()
+ball = Ball(court)
 
 game_is_on = True
 
