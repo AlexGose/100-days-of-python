@@ -1,7 +1,7 @@
 from turtle import Turtle
 
-WIDTH = 1
-LENGTH = 5
+WIDTH = 1  # stretch factor
+LENGTH = 5  # stretch factor
 SPEED = 20
 
 
@@ -14,15 +14,17 @@ class Paddle(Turtle):
         self.down_key = down_key
         self.x = x
         self.y = y
+        self.height = 20 * LENGTH
+        self.width = 20 * WIDTH
         self.draw_paddle()
         self.add_key_movements()
 
     def move_up(self):
-        if self.ycor() < self.court.height / 2 - 10 * LENGTH:
+        if self.ycor() < self.court.height / 2 - self.height / 2:
             self.forward(SPEED)
 
     def move_down(self):
-        if self.ycor() > - self.court.height / 2 + 10 * LENGTH:
+        if self.ycor() > - self.court.height / 2 + self.height / 2:
             self.back(SPEED)
 
     def add_key_movements(self):
