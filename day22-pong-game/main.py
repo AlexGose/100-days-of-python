@@ -15,7 +15,7 @@ scoreboard = Scoreboard()
 game_is_on = True
 
 while game_is_on:
-    time.sleep(0.1)
+    time.sleep(ball.move_time)
     if ball.is_off_court_left():
         scoreboard.r_point()
         ball.reset_right()

@@ -1,6 +1,6 @@
 from turtle import Turtle
 
-SPEED = 10
+SPEED = 10  # num horizontal/vertical pixels per move time
 
 
 class Ball(Turtle):
@@ -13,6 +13,7 @@ class Ball(Turtle):
         self.penup()
         self.dx = SPEED
         self.dy = SPEED
+        self.move_time = 0.1
 
     def move(self):
         if self.is_hitting_wall():
@@ -44,10 +45,12 @@ class Ball(Turtle):
     def bounce_left_if_hitting(self, paddle):
         if self.is_hitting(paddle) and self.is_moving_right():
             self.bounce_off_paddle()
+            self.move_time *= 0.9
 
     def bounce_right_if_hitting(self, paddle):
         if self.is_hitting(paddle) and self.is_moving_left():
             self.bounce_off_paddle()
+            self.move_time *= 0.9
 
     def is_off_court_right(self):
         return self.xcor() >= self.court.width / 2
@@ -59,8 +62,10 @@ class Ball(Turtle):
         self.goto(0, 0)
         self.dx = - SPEED
         self.dy = SPEED
+        self.move_time = 0.1
 
     def reset_right(self):
         self.goto(0, 0)
         self.dx = SPEED
         self.dy = SPEED
+        self.move_time = 0.1
