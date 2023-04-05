@@ -48,3 +48,19 @@ class Ball(Turtle):
     def bounce_right_if_hitting(self, paddle):
         if self.is_hitting(paddle) and self.is_moving_left():
             self.bounce_off_paddle()
+
+    def is_off_court_right(self):
+        return self.xcor() >= self.court.width / 2
+
+    def is_off_court_left(self):
+        return self.xcor() <= - self.court.width / 2
+
+    def reset_left(self):
+        self.goto(0, 0)
+        self.dx = - SPEED
+        self.dy = SPEED
+
+    def reset_right(self):
+        self.goto(0, 0)
+        self.dx = SPEED
+        self.dy = SPEED

@@ -14,6 +14,10 @@ game_is_on = True
 
 while game_is_on:
     time.sleep(0.1)
+    if ball.is_off_court_left():
+        ball.reset_right()
+    if ball.is_off_court_right():
+        ball.reset_left()
     ball.bounce_left_if_hitting(r_paddle)
     ball.bounce_right_if_hitting(l_paddle)
     ball.move()
