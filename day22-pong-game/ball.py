@@ -7,6 +7,7 @@ class Ball(Turtle):
 
     def __init__(self, court):
         super().__init__(shape='circle')
+        self.radius = 20
         self.court = court
         self.color("white")
         self.penup()
@@ -23,4 +24,27 @@ class Ball(Turtle):
         return self.ycor() >= self.court.height / 2 or self.ycor() <= -self.court.height / 2
 
     def bounce_off_wall(self):
-        self.dy = - self.dy
+        self.dy *= -1
+
+    def bounce_off_paddle(self):
+        self.dx *= -1
+
+    def is_hitting(self, paddle):
+        return - self.radius / 2 - paddle.width / 2 <= self.xcor() - paddle.xcor() \
+                <= paddle.width / 2 + self.radius / 2 and \
+                - self.radius / 2 - paddle.height / 2 <= self.ycor() - paddle.ycor() \
+                <= paddle.height / 2 + self.radius / 2
+
+    def is_moving_right(self):
+        return self.dx > 0
+
+    def is_moving_left(self):
+        return self.dx < 0
+
+    def bounce_left_if_hitting(self, paddle):
+        if self.is_hitting(paddle) and self.is_moving_right():
+            self.bounce_off_paddle()
+
+    def bounce_right_if_hitting(self, paddle):
+        if self.is_hitting(paddle) and self.is_moving_left():
+            self.bounce_off_paddle()
