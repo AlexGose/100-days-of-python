@@ -23,6 +23,8 @@ while game_is_on:
     if car_manager.car_hitting(player):
         game_is_on = False
     player.move_on_key_press(screen)
+    if player.finished_crossing():
+        player.reset()
     screen.update()
 
 screen.exitonclick()

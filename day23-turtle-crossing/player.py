@@ -17,3 +17,9 @@ class Player(Turtle):
 
     def move_on_key_press(self, screen):
         screen.onkey(self.move_up, key="Up")
+
+    def finished_crossing(self):
+        return self.ycor() > 255
+
+    def reset(self):
+        self.goto(STARTING_POSITION)
