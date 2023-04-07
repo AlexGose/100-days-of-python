@@ -12,6 +12,7 @@ screen.listen()
 player = Player()
 car_manager = CarManager()
 
+level = 0
 num_time_steps = 0
 game_is_on = True
 while game_is_on:
@@ -19,11 +20,12 @@ while game_is_on:
     time.sleep(0.1)
     if num_time_steps % 6 == 0:
         car_manager.add_car()
-    car_manager.move_cars(0)
+    car_manager.move_cars(level)
     if car_manager.car_hitting(player):
         game_is_on = False
     player.move_on_key_press(screen)
     if player.finished_crossing():
+        level += 1
         player.reset()
     screen.update()
 
