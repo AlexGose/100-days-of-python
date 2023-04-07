@@ -24,6 +24,7 @@ while game_is_on:
     car_manager.move_cars(scoreboard.score)
     if car_manager.car_hitting(player):
         game_is_on = False
+        scoreboard.game_over()
     player.move_on_key_press(screen)
     if player.finished_crossing():
         scoreboard.update()
