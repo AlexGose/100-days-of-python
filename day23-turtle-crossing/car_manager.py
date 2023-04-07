@@ -18,8 +18,9 @@ class Car(Turtle):
     def move(self, num_levels):
         self.forward(STARTING_MOVE_DISTANCE + num_levels * MOVE_INCREMENT)
 
-    def car_drove_off_screen(self):
+    def drove_off_screen(self):
         return self.xcor() < - 320
+
 
 
 class CarManager:
@@ -33,5 +34,5 @@ class CarManager:
     def move_cars(self, num_levels):
         for car in self.cars:
             car.move(num_levels)
-            if car.car_drove_off_screen():
+            if car.drove_off_screen():
                 self.cars.remove(car)
