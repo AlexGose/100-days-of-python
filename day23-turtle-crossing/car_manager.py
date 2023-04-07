@@ -21,6 +21,10 @@ class Car(Turtle):
     def drove_off_screen(self):
         return self.xcor() < - 320
 
+    def is_hitting(self, player):
+        abs_diff_y = abs(self.ycor() - player.ycor())
+        abs_diff_x = abs(self.xcor() - player.xcor())
+        return abs_diff_y < 20 and abs_diff_x < 30
 
 
 class CarManager:
@@ -36,3 +40,9 @@ class CarManager:
             car.move(num_levels)
             if car.drove_off_screen():
                 self.cars.remove(car)
+
+    def car_hitting(self, player):
+        for car in self.cars:
+            if car.is_hitting(player):
+                return True
+        return False

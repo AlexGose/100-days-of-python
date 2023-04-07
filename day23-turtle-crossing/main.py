@@ -20,5 +20,9 @@ while game_is_on:
     if num_time_steps % 6 == 0:
         car_manager.add_car()
     car_manager.move_cars(0)
+    if car_manager.car_hitting(player):
+        game_is_on = False
     player.move_on_key_press(screen)
     screen.update()
+
+screen.exitonclick()
