@@ -10,9 +10,15 @@ screen.tracer(0)
 screen.listen()
 
 player = Player()
+car_manager = CarManager()
 
+num_time_steps = 0
 game_is_on = True
 while game_is_on:
+    num_time_steps += 1
     time.sleep(0.1)
+    if num_time_steps % 6 == 0:
+        car_manager.add_car()
+    car_manager.move_cars(0)
     player.move_on_key_press(screen)
     screen.update()
