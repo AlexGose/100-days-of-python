@@ -13,7 +13,7 @@ class Car(Turtle):
         self.color(random.choice(COLORS))
         self.shapesize(stretch_wid=1, stretch_len=2)
         self.setheading(180)
-        self.goto(300, - 295 + 590 * random.random())
+        self.goto(300, - 250 + 500 * random.random())
 
     def move(self, num_levels):
         self.forward(STARTING_MOVE_DISTANCE + num_levels * MOVE_INCREMENT)
