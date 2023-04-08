@@ -8,10 +8,9 @@ RIGHT_ANGLE = 0
 
 class Snake:
     def __init__(self):
-        self.segments = []  # initialize with 3 white squares
-        for turtle_index in range(3):
-            self.add_segment(- 20 * turtle_index, 0)
-        self.head = self.segments[0]
+        self.segments = []
+        self.head = None
+        self.reset()
 
     def add_segment(self, x, y):
         next_turtle = Turtle(shape='square')
@@ -22,6 +21,14 @@ class Snake:
 
     def extend(self):
         self.add_segment(self.segments[-1].xcor(), self.segments[-1].ycor())
+
+    def reset(self):
+        for seg in self.segments:
+            seg.goto(1000, 1000)  # move off the screen
+        self.segments.clear()
+        for turtle_index in range(3):
+            self.add_segment(- 20 * turtle_index, 0)
+        self.head = self.segments[0]
 
     def move(self):
         for seg_num in range(len(self.segments) - 1, 0, -1):
