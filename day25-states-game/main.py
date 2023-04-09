@@ -20,12 +20,15 @@ def write_state_name(state_name, states_data, state_writer):
     state_writer.write(state_name)
 
 
-num_correct = 0
-while num_correct < 50:
-    answer_state = screen.textinput(title=f"{num_correct}/50 States Correct", prompt="What's another state's name?")
+guessed_states = []
+while len(guessed_states) < 50:
+    answer_state = screen.textinput(title=f"{len(guessed_states)}/50 States Correct",
+                                    prompt="What's another state's name?")
     answer_state = answer_state.title()
     if data['state'].isin([answer_state]).any():
-        num_correct += 1
+        guessed_states.append(answer_state)
         write_state_name(answer_state, data, writer)
+    if answer_state == 'Exit':
+        break
 
-screen.exitonclick()
+data[~data['state'].isin(guessed_states)]['state'].to_csv('states_to_learn.csv')
