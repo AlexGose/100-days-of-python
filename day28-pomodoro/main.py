@@ -36,6 +36,7 @@ def start_timer():
 
 # ---------------------------- COUNTDOWN MECHANISM ------------------------------- # 
 def count_down(count):
+    global reps
     count_min = count // 60
     count_sec = count % 60
     canvas.itemconfig(time_text, text=f"{count_min}:{count_sec:02d}")
@@ -43,6 +44,8 @@ def count_down(count):
         window.after(10, count_down, count - 1)
     else:
         start_timer()
+        if reps % 2 == 0:
+            checks_label.config(text="✔" * (reps // 2))
 
 
 # ---------------------------- UI SETUP ------------------------------- #
@@ -65,7 +68,7 @@ start_button.grid(row=2, column=0)
 reset_button = tkinter.Button(text="Reset")
 reset_button.grid(row=2, column=2)
 
-checks_label = tkinter.Label(text="✔", fg=GREEN, bg=YELLOW, font=(FONT_NAME, 25, "bold"))
+checks_label = tkinter.Label(fg=GREEN, bg=YELLOW, font=(FONT_NAME, 25, "bold"))
 checks_label.grid(row=2, column=1)
 
 window.mainloop()
