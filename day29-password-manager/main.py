@@ -55,6 +55,11 @@ def save():
         password_entry.delete(0, 'end')
 
 
+# ----------------------------- SEARCH -------------------------------- #
+def search():
+    pass
+
+
 # ---------------------------- UI SETUP ------------------------------- #
 window = tkinter.Tk()
 window.title("Password Manager")
@@ -68,9 +73,12 @@ canvas.grid(row=0, column=1)
 website_label = tkinter.Label(text="Website:")
 website_label.grid(row=1, column=0)
 
-website_entry = tkinter.Entry(width=45)
-website_entry.grid(row=1, column=1, columnspan=2)
+website_entry = tkinter.Entry(width=25)
+website_entry.grid(row=1, column=1)
 website_entry.focus()
+
+search_button = tkinter.Button(text="Search", width=15, command=search)
+search_button.grid(row=1, column=2)
 
 username_label = tkinter.Label(text="Email/Username:")
 username_label.grid(row=2, column=0)
