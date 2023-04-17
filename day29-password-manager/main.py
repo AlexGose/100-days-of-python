@@ -55,9 +55,21 @@ def save():
         password_entry.delete(0, 'end')
 
 
-# ----------------------------- SEARCH -------------------------------- #
-def search():
-    pass
+# -------------------------- FIND PASSWORD ---------------------------- #
+def find_password():
+    website = website_entry.get()
+    try:
+        with open("data.json", "r") as file:
+            data = json.load(file)
+    except FileNotFoundError:
+        tkinter.messagebox.showerror(title="Oops", message="No data file found!")
+    else:
+        if website in data:
+            website_data = data[website]
+            tkinter.messagebox.showinfo(title=website, message=f"User: {website_data['username']}\n"
+                                                               + f"Password: {website_data['password']}\n")
+        else:
+            tkinter.messagebox.showerror(title="Oops", message="No details for the website exists!")
 
 
 # ---------------------------- UI SETUP ------------------------------- #
@@ -77,7 +89,7 @@ website_entry = tkinter.Entry(width=25)
 website_entry.grid(row=1, column=1)
 website_entry.focus()
 
-search_button = tkinter.Button(text="Search", width=15, command=search)
+search_button = tkinter.Button(text="Search", width=15, command=find_password)
 search_button.grid(row=1, column=2)
 
 username_label = tkinter.Label(text="Email/Username:")
