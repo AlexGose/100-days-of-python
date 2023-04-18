@@ -6,22 +6,33 @@ BACKGROUND_COLOR = "#B1DDC6"
 def flip_card():
     canvas.itemconfig(card_image, image=card_back_img)
     canvas.itemconfig(front_top_text, text="English", fill="white")
-    canvas.itemconfig(front_bottom_text, text=next_translation['English'], fill="white")
+    canvas.itemconfig(front_bottom_text, text=next_translation['English'].iloc[0], fill="white")
 
 
 def next_card():
     global flip_id, next_translation
     if flip_id:
         window.after_cancel(flip_id)
-    next_translation = data.sample().iloc[0]
+    next_translation = words_to_learn.sample()
     canvas.itemconfig(card_image, image=card_front_img)
     canvas.itemconfig(front_top_text, text="French", fill="black")
-    canvas.itemconfig(front_bottom_text, text=next_translation['French'], fill="black")
+    canvas.itemconfig(front_bottom_text, text=next_translation['French'].iloc[0], fill="black")
     flip_id = window.after(3000, flip_card)
 
 
+def known_word():
+    global words_to_learn
+    words_to_learn = words_to_learn.drop(next_translation.index[0], axis=0)
+    words_to_learn.to_csv('data/words_to_learn.csv', index=False)
+    next_card()
+
+
 if __name__ == "__main__":
-    data = pd.read_csv("data/french_words.csv")
+    try:
+        words_to_learn = pd.read_csv("data/words_to_learn.csv")
+    except FileNotFoundError:
+        words_to_learn = pd.read_csv("data/french_words.csv")
+
     next_translation = None
 
     window = tkinter.Tk()
@@ -47,9 +58,10 @@ if __name__ == "__main__":
 
     right_img = tkinter.PhotoImage(file="images/right.png")
     right_button = tkinter.Button(image=right_img, background=BACKGROUND_COLOR,
-                                  highlightthickness=0, command=next_card)
+                                  highlightthickness=0, command=known_word)
     right_button.grid(row=1, column=1)
 
+    translation_index = -1
     flip_id = None
     next_card()
 
