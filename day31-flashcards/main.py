@@ -4,21 +4,26 @@ BACKGROUND_COLOR = "#B1DDC6"
 
 
 def flip_card():
-    global card_image
-    card_image = canvas.itemconfig(card_image, image=card_back_img)
+    canvas.itemconfig(card_image, image=card_back_img)
+    canvas.itemconfig(front_top_text, text="English", fill="white")
+    canvas.itemconfig(front_bottom_text, text=next_translation['English'], fill="white")
 
 
 def next_card():
-    global flip_id
+    global flip_id, next_translation
     if flip_id:
         window.after_cancel(flip_id)
-    canvas.itemconfig(front_top_text, text="French")
-    canvas.itemconfig(front_bottom_text, text=data['French'].sample().iloc[0])
+    next_translation = data.sample().iloc[0]
+    canvas.itemconfig(card_image, image=card_front_img)
+    canvas.itemconfig(front_top_text, text="French", fill="black")
+    canvas.itemconfig(front_bottom_text, text=next_translation['French'], fill="black")
     flip_id = window.after(3000, flip_card)
 
 
 if __name__ == "__main__":
     data = pd.read_csv("data/french_words.csv")
+    next_translation = None
+
     window = tkinter.Tk()
     window.title("Flashy")
     window.configure(padx=50, pady=50, background=BACKGROUND_COLOR)
