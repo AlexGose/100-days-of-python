@@ -13,7 +13,12 @@ if __name__ == "__main__":
 
     logo_img = tkinter.PhotoImage(file="images/card_front.png")
     canvas.create_image(400, 263, image=logo_img)
+    canvas.create_text(400, 150, text="French", font=('Ariel', 40, 'italic'))
+    canvas.create_text(400, 253, text="trouve", font=('Ariel', 60, "bold"))
+
     canvas.grid(row=0, column=0, columnspan=2)
+
+
 
     wrong_img = tkinter.PhotoImage(file="images/wrong.png")
     wrong_button = tkinter.Button(image=wrong_img, background=BACKGROUND_COLOR,
