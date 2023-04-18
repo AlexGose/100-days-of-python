@@ -3,9 +3,18 @@ import tkinter
 BACKGROUND_COLOR = "#B1DDC6"
 
 
+def flip_card():
+    global card_image
+    card_image = canvas.itemconfig(card_image, image=card_back_img)
+
+
 def next_card():
+    global flip_id
+    if flip_id:
+        window.after_cancel(flip_id)
     canvas.itemconfig(front_top_text, text="French")
     canvas.itemconfig(front_bottom_text, text=data['French'].sample().iloc[0])
+    flip_id = window.after(3000, flip_card)
 
 
 if __name__ == "__main__":
@@ -19,7 +28,8 @@ if __name__ == "__main__":
     canvas.configure()
 
     card_front_img = tkinter.PhotoImage(file="images/card_front.png")
-    canvas.create_image(400, 263, image=card_front_img)
+    card_back_img = tkinter.PhotoImage(file="images/card_back.png")
+    card_image = canvas.create_image(400, 263, image=card_front_img)
     front_top_text = canvas.create_text(400, 150, font=('Ariel', 40, 'italic'))
     front_bottom_text = canvas.create_text(400, 253, font=('Ariel', 60, "bold"))
 
@@ -35,6 +45,7 @@ if __name__ == "__main__":
                                   highlightthickness=0, command=next_card)
     right_button.grid(row=1, column=1)
 
+    flip_id = None
     next_card()
 
     window.mainloop()
