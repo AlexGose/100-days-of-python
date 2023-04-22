@@ -28,11 +28,11 @@ class QuizInterface:
                                                      font=('Ariel', 20, 'italic'))
 
         checkmark_img = tkinter.PhotoImage(file="images/true.png")
-        self.true_button = tkinter.Button(image=checkmark_img, highlightthickness=0)
+        self.true_button = tkinter.Button(image=checkmark_img, highlightthickness=0, command=self.select_true)
         self.true_button.grid(row=2, column=0)
 
         x_img = tkinter.PhotoImage(file="images/false.png")
-        self.false_button = tkinter.Button(image=x_img, highlightthickness=0)
+        self.false_button = tkinter.Button(image=x_img, highlightthickness=0, command=self.select_false)
         self.false_button.grid(row=2, column=1)
 
         self.get_next_question()
@@ -41,3 +41,9 @@ class QuizInterface:
 
     def get_next_question(self):
         self.canvas.itemconfig(self.question_text, text=self.quiz.next_question())
+
+    def select_true(self):
+        self.quiz.check_answer("True")
+
+    def select_false(self):
+        self.quiz.check_answer("False")
