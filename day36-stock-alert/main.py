@@ -1,8 +1,33 @@
+import requests
+import os
+import datetime
+
 STOCK = "TSLA"
 COMPANY_NAME = "Tesla Inc"
+AV_ENDPOINT = "https://www.alphavantage.co/query"
+AV_API_KEY = os.getenv('ALPHAVANTAGE_API_KEY')
 
-## STEP 1: Use https://www.alphavantage.co
-# When STOCK price increase/decreases by 5% between yesterday and the day before yesterday then print("Get News").
+parameters = {
+    'function': 'TIME_SERIES_DAILY_ADJUSTED',
+    'symbol': STOCK,
+    'apikey': AV_API_KEY
+}
+response = requests.get(AV_ENDPOINT, params=parameters)
+response.raise_for_status()
+data = response.json()
+
+today_date = datetime.datetime.now()
+yesterday_date = (today_date - datetime.timedelta(days=1))
+two_days_ago_date = (today_date - datetime.timedelta(days=2))
+yesterday_date_str = yesterday_date.strftime('%Y-%m-%d')
+two_days_ago_str = two_days_ago_date.strftime('%Y-%m-%d')
+
+price_yesterday = float(data['Time Series (Daily)'][yesterday_date_str]['4. close'])
+price_two_days_ago = float(data['Time Series (Daily)'][two_days_ago_str]['4. close'])
+percent_change = (price_yesterday - price_two_days_ago) / price_two_days_ago * 100
+if abs(percent_change) > 5:
+    print("Get News")
+print(f"{percent_change=}")
 
 ## STEP 2: Use https://newsapi.org
 # Instead of printing ("Get News"), actually get the first 3 news pieces for the COMPANY_NAME. 
