@@ -1,12 +1,15 @@
+from dataclasses import dataclass
+
+
+@dataclass
 class FlightData:
-    def __init__(self, price, airport_from, city_from, airport_to, city_to, departure_date, return_date):
-        self.price = price
-        self.airport_from = airport_from
-        self.city_from = city_from
-        self.airport_to = airport_to
-        self.city_to = city_to
-        self.departure_date = departure_date
-        self.return_date = return_date
+    price: str
+    airport_from: str
+    city_from: str
+    airport_to: str
+    city_to: str
+    departure_date: str
+    return_date: str
 
     def alert_message(self):
         message = f"Low price alert! Only ${self.price} to fly "
@@ -16,8 +19,13 @@ class FlightData:
         message += f"to {self.return_date}."
         return message
 
+    @staticmethod
+    def parse_json(json):
+        return FlightData(json['price'], json['flyFrom'], json['cityFrom'], json['flyTo'], json['cityTo'],
+                          json['route'][0]['local_departure'][:10], json['route'][1]['local_arrival'][:10])
+
 
 if __name__ == '__main__':
-    fd = FlightData(41, 'STN', 'London', 'SXF', 'Berlin', '2020-08-25', '2020-09-10')
+    fd = FlightData('41', 'STN', 'London', 'SXF', 'Berlin', '2020-08-25', '2020-09-10')
     print(fd.alert_message())
-    
+    print(fd)
