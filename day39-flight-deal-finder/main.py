@@ -1,1 +1,6 @@
-#This file will need to use the DataManager,FlightSearch, FlightData, NotificationManager classes to achieve the program requirements.
+from flight_search import FlightSearch
+
+
+if __name__ == '__main__':
+    fs = FlightSearch()
+    fs.get_iata('Paris')
