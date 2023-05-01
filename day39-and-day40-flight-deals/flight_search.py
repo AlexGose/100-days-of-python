@@ -24,7 +24,7 @@ class FlightSearch:
         response.raise_for_status()
         return response.json()['locations'][0]['code']
 
-    def get_flights(self, destination, max_price, min_stay=5, max_stay=14):
+    def get_flights(self, destination, max_price, stop_overs=0, min_stay=5, max_stay=14):
         today = datetime.datetime.now()
         tomorrow = today + datetime.timedelta(days=1)
         six_months_after_tomorrow = tomorrow + datetime.timedelta(days=30 * 6)
@@ -32,6 +32,7 @@ class FlightSearch:
         parameters = {
             'curr': 'USD',
             'local': 'us',
+            'max_stopovers': stop_overs,
             'nights_in_dst_from': min_stay,
             'nights_in_dst_to': max_stay,
             'fly_from': self.depart_location,
@@ -41,16 +42,16 @@ class FlightSearch:
             'price_to': max_price,
             'limit': 10
         }
+        if stop_overs == 1 and parameters['fly_to'] == 'DPS':
+            print(f"{parameters=}")
         response = requests.get(url=endpoint, params=parameters, headers=self.headers)
         response.raise_for_status()
         return response.json()['data']
 
-    def get_cheapest_flight(self, destination, max_price, min_stay=5, max_stay=14):
-        flights = self.get_flights(destination, max_price, min_stay=min_stay, max_stay=max_stay)
-        if flights:
-            return self.get_flights(destination, max_price, min_stay=min_stay, max_stay=max_stay)[0]
-        else:
-            return flights
+    def get_cheapest_flight(self, destination, max_price, stop_overs=0, min_stay=5, max_stay=14):
+        flights = self.get_flights(destination, max_price, stop_overs=stop_overs,
+                                   min_stay=min_stay, max_stay=max_stay)
+        return flights[0] if flights else flights
 
 
 if __name__ == '__main__':
