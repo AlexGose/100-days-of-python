@@ -7,6 +7,10 @@ import os
 DEPARTURE_AIRPORT = os.getenv('DEPARTURE_AIRPORT')
 
 if __name__ == '__main__':
+    fs = FlightSearch(DEPARTURE_AIRPORT)
+    nm = NotificationManager()
+    dm = DataManager()
+
     print("Welcome to Alex's flight club.\nWe find the best flight deals and email you.")
     first_name = input("What is your first name?\n")
     last_name = input("What is your last name?\n")
@@ -14,12 +18,11 @@ if __name__ == '__main__':
     email_again = input("Type your email again.\n")
     if email == email_again:
         print("You're in the club!")
+        dm.add_user(first_name, last_name, email)
     else:
         print("Sorry, email address verification failed.")
+        exit(1)
 
-    # fs = FlightSearch(DEPARTURE_AIRPORT)
-    # nm = NotificationManager()
-    # dm = DataManager()
     # rows = dm.get_rows()
     # for row in rows:
     #     if not row['iataCode']:
