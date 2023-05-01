@@ -12,8 +12,11 @@ if __name__ == '__main__':
     dm = DataManager()
     rows = dm.get_rows()
     for row in rows:
-        iata_code = fs.get_iata(row['city'])
-        dm.edit_iata_code(row['id'], iata_code)
+        if not row['iataCode']:
+            iata_code = fs.get_iata(row['city'])
+            dm.edit_iata_code(row['id'], iata_code)
+        else:
+            iata_code = row['iataCode']
         cheapest_flight = fs.get_cheapest_flight(iata_code, int(row['lowestPrice']))
         if cheapest_flight:
             fd = FlightData.parse_json(cheapest_flight)
