@@ -10,10 +10,15 @@ class DataManager:
             'Authorization': f"Bearer {os.getenv('SHEETY_AUTH_TOKEN')}"
         }
 
-    def get_rows(self):
+    def get_prices_rows(self):
         response = requests.get(url=self.prices_endpoint, headers=self.headers)
         response.raise_for_status()
         return response.json()['prices']
+
+    def get_users_rows(self):
+        response = requests.get(url=self.users_endpoint, headers=self.headers)
+        response.raise_for_status()
+        return response.json()['users']
 
     def edit_iata_code(self, row, iata_code):
         row_endpoint = self.prices_endpoint + f"/{row}"

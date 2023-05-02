@@ -23,7 +23,7 @@ if __name__ == '__main__':
     else:
         print("Sorry, email address verification failed.")
 
-    rows = dm.get_rows()
+    rows = dm.get_prices_rows()
     for row in rows:
         if not row['iataCode']:
             iata_code = fs.get_iata(row['city'])
@@ -35,5 +35,5 @@ if __name__ == '__main__':
             cheapest_flight = fs.get_cheapest_flight(iata_code, int(row['lowestPrice']), stop_overs=2)
         if cheapest_flight:
             fd = FlightData.parse_json(cheapest_flight)
-            print(fd.alert_message())
-            #nm.send_email(fd.alert_message())
+            for user in dm.get_users_rows():  # send email to every user
+                nm.send_email(fd.alert_message(), to_email_address=user['email'])
