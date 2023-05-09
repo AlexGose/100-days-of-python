@@ -1,5 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
+import spotipy
+from spotipy.oauth2 import SpotifyOAuth
 
 
 def get_billboard_url():
@@ -21,7 +23,10 @@ def get_song_list(url):
 
 
 if __name__ == '__main__':
-    song_list, artist_list = get_song_list(get_billboard_url())
+    # song_list, artist_list = get_song_list(get_billboard_url())
 
-    print(artist_list)
-    print(song_list)
+    scope = "playlist-modify-private"
+
+    spotify = SpotifyOAuth(scope=scope)
+    access_token = spotify.get_access_token()
+
