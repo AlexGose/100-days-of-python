@@ -28,5 +28,6 @@ if __name__ == '__main__':
     scope = "playlist-modify-private"
 
     spotify = SpotifyOAuth(scope=scope)
-    access_token = spotify.get_access_token()
 
+    sp = spotipy.Spotify(oauth_manager=spotify)
+    print(sp.current_user()["id"])
