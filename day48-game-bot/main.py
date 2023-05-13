@@ -1,35 +1,27 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
+from time import sleep
 
 service = Service("/opt/chromedriver")
 driver = webdriver.Chrome(service=service)
 
-# driver.get('https://www.amazon.com/dp/B075CYMYK6')
-# price = driver.find_element(By.CLASS_NAME, "a-offscreen")
-# print(price.get_attribute('innerHTML'))
+driver.get("https://orteil.dashnet.org/experiments/cookie/")
 
-driver.get("https://www.python.org/")
+cookie = driver.find_element(By.ID, "cookie")
 
-# search_bar = driver.find_element(By.NAME, 'q')
-# print(search_bar.get_attribute("place-holder"))
-#
-# logo = driver.find_element(By.CLASS_NAME, 'python-logo')
-# print(logo.size)
-#
-# documentation_link = driver.find_element(By.CSS_SELECTOR, '.documentation-widget a')
-# print(documentation_link.get_attribute("href"))
-# print(documentation_link.text)
-#
-# print(driver.find_element(By.XPATH, '//*[@id="content"]/div/section/div[1]/div[3]/p[2]/a').text)
+for k in range(60):  # loop finishes after 5 minutes
+    for i in range(100):  # loop finishes after 5 seconds
+        sleep(0.05)  # 5 milliseconds
+        cookie.click()
+    store = driver.find_element(By.ID, "store")
+    items = store.find_elements(By.CSS_SELECTOR, 'div[onclick]')
+    for item in items:
+        if item.get_attribute("class") != "grayed":
+            last_item = item
+    last_item.click()  # get the most expensive item available
 
-events_dict = {}
-events_list = driver.find_elements(By.CSS_SELECTOR, '.event-widget li')
-for index, event in enumerate(events_list):
-    timestamp = event.find_element(By.TAG_NAME, 'time').get_attribute('datetime')
-    events_dict[index] = {}
-    events_dict[index]['time'] = timestamp[:10]
-    events_dict[index]['name'] = event.find_element(By.TAG_NAME, 'a').text
+cps = driver.find_element(By.ID, "cps")
+print(cps.text)
 
-print(events_dict)
 driver.quit()
