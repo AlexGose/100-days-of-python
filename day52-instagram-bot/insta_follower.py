@@ -1,6 +1,7 @@
 from selenium.webdriver import Chrome
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
+from selenium.common.exceptions import ElementClickInterceptedException, NoSuchElementException
 import os
 import time
 
@@ -39,7 +40,26 @@ class InstaFollower:
         time.sleep(10)
 
     def follow(self):
-        pass
+        counter = 1
+        while True:
+            try:
+                xpath_follow_button = "/html/body/div[2]/div/div/div[3]/div/div/div[1]/div/div[2]/div/div" \
+                                      + f"/div/div/div[2]/div/div/div[2]/div[1]/div/div[{counter}]/div/div" \
+                                      + "/div/div[3]/div/button"
+                follow_button = self.driver.find_element(By.XPATH, xpath_follow_button)
+                follow_button.click()
+            except ElementClickInterceptedException:
+                time.sleep(2)
+                xpath_cancel_button = "/html/body/div[2]/div/div/div[3]/div/div[2]/div[1]/div/div[2]" \
+                               + "/div/div/div/div/div/div/button[2]"
+                cancel_link = self.driver.find_element(By.XPATH, xpath_cancel_button)
+                cancel_link.click()
+            except NoSuchElementException:
+                break
+            else:
+                counter += 1
+
+            time.sleep(1)
 
 
 if __name__ == '__main__':
