@@ -5,7 +5,7 @@ import os
 CHROMEDRIVER_PATH = "/opt/chromedriver"
 INSTAGRAM_USERNAME = os.getenv('INSTAGRAM_USERNAME')
 INSTAGRAM_PASSWORD = os.getenv('INSTAGRAM_PASSWORD')
-
+SIMILAR_INSTAGRAM_ACCOUNT = os.getenv('SIMILAR_INSTAGRAM_ACCOUNT')
 
 class InstaFollower:
     def __init__(self):
