@@ -20,21 +20,23 @@ ZILLOW_URL = "https://www.zillow.com/homes/for_rent/1-_beds/?searchQueryState=%7
 class ZillowScraper:
     def __init__(self):
         self.driver = Chrome(service=Service(CHROMEDRIVER_PATH))
+        self.addresses = []
+        self.prices = []
+        self.links = []
 
     def open_webpage(self):
         self.driver.get(ZILLOW_URL)
         time.sleep(20)
 
-    def scrape(self, address_list, price_list, link_list):
+    def scrape(self):
         listings = self.driver.find_elements(By.CLASS_NAME, 'StyledListCardWrapper-srp__sc-wtsrtn-0')
         for listing in listings:
             info = listing.text.split('\n')
             if len(info) == 1:  # skip advertisements
                 continue
-            address_list.append(info[0])
-            price_list.append(info[1].split('+')[0].split('/')[0])
-            link_list.append(listing.find_element(By.CLASS_NAME, 'property-card-link').get_attribute('href'))
-        return address_list, price_list, link_list
+            self.addresses.append(info[0])
+            self.prices.append(info[1].split('+')[0].split('/')[0])
+            self.links.append(listing.find_element(By.CLASS_NAME, 'property-card-link').get_attribute('href'))
 
     def next_page(self):
         listings = self.driver.find_element(By.ID, 'search-page-list-container')
@@ -43,16 +45,15 @@ class ZillowScraper:
 
     def run(self):
         self.open_webpage()
-        addresses = []
-        prices = []
-        links = []
         for page_number in range(5):
-            addresses, prices, links = zs.scrape(addresses, prices, links)
+            zs.scrape()
             zs.next_page()
-        return addresses, prices, links
 
 
 if __name__ == '__main__':
     zs = ZillowScraper()
-    print(zs.run())
+    zs.run()
+    print(zs.addresses)
+    print(zs.prices)
+    print(zs.links)
 
