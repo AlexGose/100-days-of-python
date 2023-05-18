@@ -47,7 +47,9 @@ class ZillowScraper:
         self.open_webpage()
         for page_number in range(5):
             self.scrape()
+            time.sleep(4)
             self.next_page()
+            time.sleep(4)
 
 
 if __name__ == '__main__':
