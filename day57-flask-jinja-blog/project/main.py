@@ -11,8 +11,8 @@ def home():
     return render_template("index.html", posts=all_posts)
 
 
-@app.route('/blog/<num>')
-def get_blog(num):
+@app.route('/post/<num>')
+def get_post(num):
     return render_template("post.html", num=num)
 
 
