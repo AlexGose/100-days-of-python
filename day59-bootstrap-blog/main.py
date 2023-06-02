@@ -22,5 +22,10 @@ def contact():
     return render_template('contact.html')
 
 
+@app.route('/post/<int:post_id>')
+def post(post_id):
+    return render_template('post.html', blog=blogs_data[post_id-1])
+
+
 if __name__ == '__main__':
     app.run(debug=True)
