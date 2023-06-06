@@ -12,6 +12,12 @@ Bootstrap(app)
 
 class CafeForm(FlaskForm):
     cafe = StringField('Cafe name', validators=[DataRequired()])
+    location = StringField('Cafe Location on Google Maps (URL)', validators=[DataRequired()])
+    open_time = StringField('Opening Time (e.g., 8AM)', validators=[DataRequired()])
+    close_time = StringField('Closing Time (e.g., 10PM)', validators=[DataRequired()])
+    coffee_rating = StringField('Coffee Rating', validators=[DataRequired()])
+    wifi_rating = StringField('Wifi Strength Rating', validators=[DataRequired()])
+    power = StringField('Power Socket Availability', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 # Exercise:
@@ -29,11 +35,11 @@ def home():
     return render_template("index.html")
 
 
-@app.route('/add')
+@app.route('/add', methods=['POST', 'GET'])
 def add_cafe():
     form = CafeForm()
     if form.validate_on_submit():
-        print("True")
+        return "<h1>Success!</h>"
     # Exercise:
     # Make the form write a new row into cafe-data.csv
     # with   if form.validate_on_submit()
