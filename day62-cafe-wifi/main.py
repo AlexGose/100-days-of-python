@@ -1,8 +1,8 @@
 from flask import Flask, render_template
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
-from wtforms.validators import DataRequired
+from wtforms import StringField, SubmitField, URLField, SelectField
+from wtforms.validators import DataRequired, URL, AnyOf
 import csv
 
 app = Flask(__name__)
@@ -12,21 +12,16 @@ Bootstrap(app)
 
 class CafeForm(FlaskForm):
     cafe = StringField('Cafe name', validators=[DataRequired()])
-    location = StringField('Cafe Location on Google Maps (URL)', validators=[DataRequired()])
+    location = URLField('Cafe Location on Google Maps (URL)', validators=[DataRequired(), URL()])
     open_time = StringField('Opening Time (e.g., 8AM)', validators=[DataRequired()])
     close_time = StringField('Closing Time (e.g., 10PM)', validators=[DataRequired()])
-    coffee_rating = StringField('Coffee Rating', validators=[DataRequired()])
-    wifi_rating = StringField('Wifi Strength Rating', validators=[DataRequired()])
-    power = StringField('Power Socket Availability', validators=[DataRequired()])
+    coffee_rating = SelectField('Coffee Rating', choices=['', '☕', '☕☕', '☕☕☕', '☕☕☕☕', '☕☕☕☕☕'],
+                                validators=[DataRequired()])
+    wifi_rating = SelectField('Wifi Strength Rating', choices=['✘', '💪', '💪💪', '💪💪💪', '💪💪💪💪', '💪💪💪💪💪'],
+                              validators=[DataRequired()])
+    power = SelectField('Power Socket Availability', choices=['✘', '🔌', '🔌🔌', '🔌🔌🔌', '🔌🔌🔌🔌', '🔌🔌🔌🔌🔌'],
+                        validators=[DataRequired()])
     submit = SubmitField('Submit')
-
-# Exercise:
-# add: Location URL, open time, closing time, coffee rating, wifi rating, power outlet rating fields
-# make coffee/wifi/power a select element with choice of 0 to 5.
-#e.g. You could use emojis ☕️/💪/✘/🔌
-# make all fields required except submit
-# use a validator to check that the URL field has a URL entered.
-# ---------------------------------------------------------------------------
 
 
 # all Flask routes below
