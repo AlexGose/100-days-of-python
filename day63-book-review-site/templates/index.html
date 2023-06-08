@@ -11,6 +11,9 @@
             <li>{{ book['name'] }} - {{ book['author'] }} - {{ book['rating'] }}/10</li>
         {% endfor %}
     </ul>
+    {% if all_books == [] %}
+        <p>Library is empty.</p>
+    {% endif %}
     
 <a href="{{ url_for('add') }}">Add New Book</a>
 </body>
