@@ -20,7 +20,7 @@ def add():
             'rating': request.form['rating']
         }
         all_books += [new_book]
-        return "<h1>Book successfully added</h1>"
+        return redirect(url_for('home'))
     return render_template('add.html')
 
 
