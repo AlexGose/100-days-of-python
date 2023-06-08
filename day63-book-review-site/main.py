@@ -10,8 +10,17 @@ def home():
     return render_template('index.html')
 
 
-@app.route("/add")
+@app.route("/add", methods=['GET', 'POST'])
 def add():
+    global all_books
+    if request.method == 'POST':
+        new_book = {
+            'name': request.form['name'],
+            'author': request.form['author'],
+            'rating': request.form['rating']
+        }
+        all_books += [new_book]
+        return "<h1>Book successfully added</h1>"
     return render_template('add.html')
 
 
