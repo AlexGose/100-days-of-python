@@ -51,6 +51,7 @@ print(particular_book)  # checked the database too
 book_id = 1
 book_to_update = db.one_or_404(db.select(Book).filter_by(id=1))
 book_to_update.title = 'Harry Potter and the Goblet of Fire'
+db.session.commit()
 print(book_to_update)
 
 # delete a particular record by primary key
