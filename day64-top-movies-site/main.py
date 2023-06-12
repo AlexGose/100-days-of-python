@@ -9,7 +9,7 @@ import requests
 app = Flask(__name__)
 app.app_context().push()
 app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///books-collection.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///movies.db'
 Bootstrap(app)
 
 db = SQLAlchemy()
