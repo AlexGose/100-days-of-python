@@ -43,10 +43,29 @@ db.session.add(new_movie)
 db.session.commit()
 
 
+class RateMovieForm(FlaskForm):
+    rating = StringField(label="Your Rating out of 10 (e.g., 7.5)", validators=[DataRequired()])
+    review = StringField(label="Your Review", validators=[DataRequired()])
+    submit = SubmitField('Done')
+
+
 @app.route("/")
 def home():
     movie = db.one_or_404(db.select(Movie).filter_by(id=1))
     return render_template("index.html", movie=movie)
+
+
+@app.route("/edit", methods=['POST', 'GET'])
+def edit():
+    movie_id = request.args.get('id')
+    movie = db.one_or_404(db.select(Movie).filter_by(id=movie_id))
+    form = RateMovieForm()
+    if form.validate_on_submit():
+        movie.rating = form.rating.data
+        movie.review = form.review.data
+        db.session.commit()
+        return redirect(url_for('home'))
+    return render_template("edit.html", movie=movie, form=form)
 
 
 if __name__ == '__main__':
