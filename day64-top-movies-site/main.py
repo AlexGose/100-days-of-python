@@ -7,8 +7,27 @@ from wtforms.validators import DataRequired
 import requests
 
 app = Flask(__name__)
+app.app_context().push()
 app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///books-collection.db'
 Bootstrap(app)
+
+db = SQLAlchemy()
+db.init_app(app)
+
+
+class Movie(db.Model):
+    id = db.Column(db.Integer(), primary_key=True)
+    title = db.Column(db.String(250), nullable=False)
+    year = db.Column(db.Integer(), nullable=False)
+    description = db.Column(db.String(750))
+    rating = db.Column(db.Float(), nullable=False)
+    ranking = db.Column(db.Integer(), nullable=False)
+    review = db.Column(db.String(250))
+    img_url = db.Column(db.String(250), nullable=False)
+
+
+db.create_all()
 
 
 @app.route("/")
