@@ -29,18 +29,19 @@ class Movie(db.Model):
 
 db.create_all()
 
-new_movie = Movie(
-    title="Phone Booth",
-    year=2002,
-    description="Publicist Stuart Shepard finds himself trapped in a phone booth, pinned down by an extortionist's sniper rifle. Unable to leave or receive outside help, Stuart's negotiation with the caller leads to a jaw-dropping climax.",
-    rating=7.3,
-    ranking=10,
-    review="My favourite character was the caller.",
-    img_url="https://image.tmdb.org/t/p/w500/tjrX2oWRCM3Tvarz38zlZM7Uc10.jpg"
-)
-
-db.session.add(new_movie)
-db.session.commit()
+all_movies = db.session.execute(db.select(Movie).order_by(Movie.year)).scalars().all()
+if len(all_movies) == 0:  # add a movie for testing
+    new_movie = Movie(
+        title="Phone Booth",
+        year=2002,
+        description="Publicist Stuart Shepard finds himself trapped in a phone booth, pinned down by an extortionist's sniper rifle. Unable to leave or receive outside help, Stuart's negotiation with the caller leads to a jaw-dropping climax.",
+        rating=7.3,
+        ranking=10,
+        review="My favourite character was the caller.",
+        img_url="https://image.tmdb.org/t/p/w500/tjrX2oWRCM3Tvarz38zlZM7Uc10.jpg"
+    )
+    db.session.add(new_movie)
+    db.session.commit()
 
 
 class RateMovieForm(FlaskForm):
@@ -51,8 +52,8 @@ class RateMovieForm(FlaskForm):
 
 @app.route("/")
 def home():
-    movie = db.one_or_404(db.select(Movie).filter_by(id=1))
-    return render_template("index.html", movie=movie)
+    all_movies = db.session.execute(db.select(Movie).order_by(Movie.year)).scalars().all()
+    return render_template("index.html", movies=all_movies)
 
 
 @app.route("/edit", methods=['POST', 'GET'])
@@ -66,6 +67,15 @@ def edit():
         db.session.commit()
         return redirect(url_for('home'))
     return render_template("edit.html", movie=movie, form=form)
+
+
+@app.route('/delete')
+def delete():
+    movie_id = request.args.get('id')
+    movie = db.one_or_404(db.select(Movie).filter_by(id=movie_id))
+    db.session.delete(movie)
+    db.session.commit()
+    return redirect(url_for('home'))
 
 
 if __name__ == '__main__':
