@@ -122,7 +122,7 @@ def select():
         response = requests.get(url=url, params=params)
         response.raise_for_status()
         movie_data = response.json()
-        print(response.text)
+        # print(response.text)
         movie_to_add = Movie(
             title=movie_data['title'],
             year=int(movie_data['release_date'][:4]),
@@ -131,7 +131,7 @@ def select():
         )
         db.session.add(movie_to_add)
         db.session.commit()
-        return redirect(url_for('home'))
+        return redirect(url_for('edit', id=movie_to_add.id))
 
 
 if __name__ == '__main__':
