@@ -9,6 +9,7 @@ import os
 
 TMDB_API_KEY = os.getenv('TMDB_API_KEY')
 TMDB_API_URL = "https://api.themoviedb.org/3"
+TMDB_IMAGE_URL = "https://image.tmdb.org/t/p/w500"
 
 app = Flask(__name__)
 app.app_context().push()
@@ -38,7 +39,10 @@ if len(initial_movies) == 0:  # add a movie for testing if necessary
     new_movie = Movie(
         title="Phone Booth",
         year=2002,
-        description="Publicist Stuart Shepard finds himself trapped in a phone booth, pinned down by an extortionist's sniper rifle. Unable to leave or receive outside help, Stuart's negotiation with the caller leads to a jaw-dropping climax.",
+        description="Publicist Stuart Shepard finds himself trapped in a phone booth, "
+                    "pinned down by an extortionist's sniper rifle. Unable to leave "
+                    "or receive outside help, Stuart's negotiation with the caller "
+                    "leads to a jaw-dropping climax.",
         rating=7.3,
         ranking=10,
         review="My favourite character was the caller.",
@@ -122,10 +126,7 @@ def select():
         title=movie_data['title'],
         year=int(movie_data['release_date'][:4]),
         description=movie_data['overview'],
-        # rating="",
-        # ranking=None,
-        # review="",
-        img_url=f"https://image.tmdb.org/t/p/w500/{movie_data['poster_path']}"
+        img_url=TMDB_IMAGE_URL + f"/{movie_data['poster_path']}"
     )
     db.session.add(movie_to_add)
     db.session.commit()
