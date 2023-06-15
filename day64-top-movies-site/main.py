@@ -113,24 +113,25 @@ def add():
 @app.route('/select')
 def select():
     movie_id = request.args.get('movie_id')
-    url = TMDB_API_URL + f"/movie/{movie_id}"
-    params = {
-        'language': 'en-US',
-        "api_key": TMDB_API_KEY,
-    }
-    response = requests.get(url=url, params=params)
-    response.raise_for_status()
-    movie_data = response.json()
-    print(response.text)
-    movie_to_add = Movie(
-        title=movie_data['title'],
-        year=int(movie_data['release_date'][:4]),
-        description=movie_data['overview'],
-        img_url=TMDB_IMAGE_URL + f"/{movie_data['poster_path']}"
-    )
-    db.session.add(movie_to_add)
-    db.session.commit()
-    return redirect(url_for('home'))
+    if movie_id:
+        url = TMDB_API_URL + f"/movie/{movie_id}"
+        params = {
+            'language': 'en-US',
+            "api_key": TMDB_API_KEY,
+        }
+        response = requests.get(url=url, params=params)
+        response.raise_for_status()
+        movie_data = response.json()
+        print(response.text)
+        movie_to_add = Movie(
+            title=movie_data['title'],
+            year=int(movie_data['release_date'][:4]),
+            description=movie_data['overview'],
+            img_url=TMDB_IMAGE_URL + f"/{movie_data['poster_path']}"
+        )
+        db.session.add(movie_to_add)
+        db.session.commit()
+        return redirect(url_for('home'))
 
 
 if __name__ == '__main__':
