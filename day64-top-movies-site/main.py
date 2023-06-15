@@ -8,6 +8,7 @@ import requests
 import os
 
 TMDB_API_KEY = os.getenv('TMDB_API_KEY')
+TMDB_API_URL = "https://api.themoviedb.org/3"
 
 app = Flask(__name__)
 app.app_context().push()
@@ -24,16 +25,16 @@ class Movie(db.Model):
     title = db.Column(db.String(250), nullable=False)
     year = db.Column(db.Integer(), nullable=False)
     description = db.Column(db.String(750))
-    rating = db.Column(db.Float(), nullable=False)
-    ranking = db.Column(db.Integer(), nullable=False)
-    review = db.Column(db.String(250))
+    rating = db.Column(db.Float(), nullable=True)
+    ranking = db.Column(db.Integer(), nullable=True)
+    review = db.Column(db.String(250), nullable=True)
     img_url = db.Column(db.String(250), nullable=False)
 
 
 db.create_all()
 
-all_movies = db.session.execute(db.select(Movie).order_by(Movie.year)).scalars().all()
-if len(all_movies) == 0:  # add a movie for testing
+initial_movies = db.session.execute(db.select(Movie).order_by(Movie.year)).scalars().all()
+if len(initial_movies) == 0:  # add a movie for testing if necessary
     new_movie = Movie(
         title="Phone Booth",
         year=2002,
@@ -90,26 +91,45 @@ def delete():
 def add():
     form = NewMovieForm()
     if form.validate_on_submit():
-        return redirect(url_for('select', title=form.title.data))
+        url = TMDB_API_URL + "/search/movie"
+        params = {
+            "query": form.title.data,
+            "api_key": TMDB_API_KEY,
+            "language": "en-US",
+            "include_adult": "false",
+            "page": "1"
+        }
+        response = requests.get(url=url, params=params)
+        response.raise_for_status()
+        movies = response.json()["results"]
+        return render_template('select.html', movies=movies)
     return render_template('add.html', form=form)
 
 
 @app.route('/select')
 def select():
-    url = "https://api.themoviedb.org/3/search/movie"
+    movie_id = request.args.get('movie_id')
+    url = TMDB_API_URL + f"/movie/{movie_id}"
     params = {
-        "query": request.args.get("title"),
+        'language': 'en-US',
         "api_key": TMDB_API_KEY,
-        "language": "en-US",
-        "include_adult": "false",
-        "page": "1"
     }
     response = requests.get(url=url, params=params)
     response.raise_for_status()
-    movies = response.json()["results"]
-    print(movies)
-    return render_template('select.html', movies=movies)
-
+    movie_data = response.json()
+    print(response.text)
+    movie_to_add = Movie(
+        title=movie_data['title'],
+        year=int(movie_data['release_date'][:4]),
+        description=movie_data['overview'],
+        # rating="",
+        # ranking=None,
+        # review="",
+        img_url=f"https://image.tmdb.org/t/p/w500/{movie_data['poster_path']}"
+    )
+    db.session.add(movie_to_add)
+    db.session.commit()
+    return redirect(url_for('home'))
 
 
 if __name__ == '__main__':
