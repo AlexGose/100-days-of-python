@@ -1,3 +1,4 @@
+import random
 from flask import Flask, jsonify, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 
@@ -30,6 +31,11 @@ def home():
     
 
 ## HTTP GET - Read Record
+@app.route("/random")
+def random_cafe():
+    all_cafes = db.session.execute(db.select(Cafe).order_by(Cafe.id)).scalars().all()
+    cafe = random.choice(all_cafes)
+    return f"<h1>Random cafe {cafe.name} with id = {cafe.id} was chosen</h1>"
 
 ## HTTP POST - Create Record
 
