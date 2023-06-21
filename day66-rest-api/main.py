@@ -33,12 +33,18 @@ def home():
     return render_template("index.html")
     
 
-## HTTP GET - Read Record
 @app.route("/random")
 def random_cafe():
     all_cafes = db.session.execute(db.select(Cafe).order_by(Cafe.id)).scalars().all()
     cafe = random.choice(all_cafes)
     return jsonify(cafe=cafe.to_dict())
+
+
+@app.route('/all')
+def get_cafes():
+    all_cafes = db.session.execute(db.select(Cafe).order_by(Cafe.id)).scalars().all()
+    return jsonify(cafes=[cafe.to_dict() for cafe in all_cafes])
+
 
 ## HTTP POST - Create Record
 
