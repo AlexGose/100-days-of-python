@@ -46,6 +46,18 @@ def get_cafes():
     return jsonify(cafes=[cafe.to_dict() for cafe in all_cafes])
 
 
+@app.route('/search')
+def search():
+    location = request.args.get('loc')
+    cafe_at_location = db.session.execute(db.select(Cafe).filter_by(location=location)).scalars().first()
+    if cafe_at_location:
+        return jsonify(cafe=cafe_at_location.to_dict())
+    else:
+        return jsonify(error={"Not Found": "Sorry, we don't have a cafe at that location."})
+
+
+
+
 ## HTTP POST - Create Record
 
 ## HTTP PUT/PATCH - Update Record
