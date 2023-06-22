@@ -56,9 +56,35 @@ def search():
         return jsonify(error={"Not Found": "Sorry, we don't have a cafe at that location."})
 
 
+def str2bool(s):
+    """
+    Returns boolean for input string `"True"` or `"False"`
+    """
+    if s == "True" or s == "true":
+        return True
+    elif s == "False" or s == "false":
+        return False
+    else:
+        raise ValueError("Input string must be 'True' or 'False'")
 
 
-## HTTP POST - Create Record
+@app.route('/add', methods=['POST'])
+def add():
+    new_cafe = Cafe(
+        name=request.form['name'],
+        map_url=request.form['map_url'],
+        img_url=request.form['img_url'],
+        location=request.form['location'],
+        seats=request.form['seats'],
+        has_toilet=str2bool(request.form['has_toilet']),
+        has_wifi=str2bool(request.form['has_wifi']),
+        has_sockets=str2bool(request.form['has_sockets']),
+        can_take_calls=str2bool(request.form['can_take_calls']),
+        coffee_price=request.form['coffee_price'],
+    )
+    db.session.add(new_cafe)
+    db.session.commit()
+    return jsonify(response={"success": "Successfully added the new cafe."})
 
 ## HTTP PUT/PATCH - Update Record
 
