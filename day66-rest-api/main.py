@@ -53,7 +53,7 @@ def search():
     if cafe_at_location:
         return jsonify(cafe=cafe_at_location.to_dict())
     else:
-        return jsonify(error={"Not Found": "Sorry, we don't have a cafe at that location."})
+        return jsonify(error={"Not Found": "Sorry, we don't have a cafe at that location."}), 404
 
 
 def str2bool(s):
@@ -86,7 +86,18 @@ def add():
     db.session.commit()
     return jsonify(response={"success": "Successfully added the new cafe."})
 
-## HTTP PUT/PATCH - Update Record
+
+@app.route('/update-price/<int:cafe_id>', methods=['PATCH'])
+def update(cafe_id):
+    new_price = request.args.get('new_price')
+    cafe_to_update = db.session.execute(db.select(Cafe).filter_by(id=cafe_id)).scalars().first()
+    if cafe_to_update:
+        cafe_to_update.coffee_price = new_price
+        db.session.commit()
+        return jsonify(success="Successfully updated the price.")
+    else:
+        return jsonify(error={"Not Found": "Sorry a cafe with that id was not found in the database."}), 404
+
 
 ## HTTP DELETE - Delete Record
 
