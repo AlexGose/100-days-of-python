@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, request
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
@@ -64,7 +64,30 @@ def new_post():
         db.session.add(post)
         db.session.commit()
         return redirect(url_for('get_all_posts'))
-    return render_template("make-post.html", form=form)
+    return render_template("make-post.html", form=form, type="New")
+
+
+@app.route('/edit-post/<int:post_id>', methods=['GET', 'POST'])
+def edit(post_id):
+    form = CreatePostForm()
+    post_to_edit = db.one_or_404(db.select(BlogPost).filter_by(id=post_id))
+    if request.method == 'GET':
+        form.title.data = post_to_edit.title
+        form.author.data = post_to_edit.author
+        form.subtitle.data = post_to_edit.subtitle
+        form.img_url.data = post_to_edit.img_url
+        form.body.data = post_to_edit.body
+        return render_template('make-post.html', form=form, type="Edit")
+    if form.validate_on_submit():
+        post_to_edit.title = form.title.data
+        post_to_edit.author = form.author.data
+        post_to_edit.subtitle = form.subtitle.data
+        post_to_edit.img_url = form.img_url.data
+        post_to_edit.body = form.body.data
+        db.session.commit()
+        return redirect(url_for('show_post', index=post_id))
+
+
 
 
 @app.route("/about")
