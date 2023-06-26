@@ -88,6 +88,12 @@ def edit(post_id):
         return redirect(url_for('show_post', index=post_id))
 
 
+@app.route("/delete/<post_id>")
+def delete(post_id):
+    post_to_delete = db.one_or_404(db.select(BlogPost).filter_by(id=post_id))
+    db.session.delete(post_to_delete)
+    db.session.commit()
+    return redirect(url_for('get_all_posts'))
 
 
 @app.route("/about")
