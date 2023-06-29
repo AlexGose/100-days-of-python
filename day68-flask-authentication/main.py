@@ -56,10 +56,12 @@ def register():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        user = db.one_or_404(db.select(User).filter_by(email=request.form["email"]))
+        user = db.session.execute(db.select(User).filter_by(email=request.form["email"])).scalars().first()
+        if not user:
+            flash('That email does not exist, please try again.')
+            return redirect('/login')
         if check_password_hash(user.password, request.form["password"]):
             login_user(user)
-            flash('Logged in successfully.')
         return redirect(url_for('secrets'))
     return render_template("login.html")
 
