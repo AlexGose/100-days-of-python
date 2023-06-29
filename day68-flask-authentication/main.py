@@ -49,7 +49,7 @@ def register():
         )
         db.session.add(new_user)
         db.session.commit()
-        return render_template('secrets.html', name=username)
+        return redirect(url_for('secrets'))
     return render_template("register.html")
 
 
@@ -60,14 +60,14 @@ def login():
         if check_password_hash(user.password, request.form["password"]):
             login_user(user)
             flash('Logged in successfully.')
-        return render_template('secrets.html', name=user.name)
+        return redirect(url_for('secrets'))
     return render_template("login.html")
 
 
 @app.route('/secrets')
 @login_required
 def secrets():
-    return render_template("secrets.html")
+    return render_template("secrets.html", name=current_user.name)
 
 
 @app.route('/logout')
