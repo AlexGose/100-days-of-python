@@ -62,7 +62,10 @@ def login():
             return redirect('/login')
         if check_password_hash(user.password, request.form["password"]):
             login_user(user)
-        return redirect(url_for('secrets'))
+            return redirect(url_for('secrets'))
+        else:
+            flash('Password incorrect, please try again.')
+            return redirect(url_for('login'))
     return render_template("login.html")
 
 
