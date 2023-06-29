@@ -41,6 +41,9 @@ def home():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
+        if db.session.execute(db.select(User).filter_by(email=request.form["email"])).first():
+            flash("You've already signed up with that email, please log in.")
+            return redirect(url_for('login'))
         username = request.form['name']
         new_user = User(
             email=request.form["email"],
