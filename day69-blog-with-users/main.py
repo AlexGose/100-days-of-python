@@ -31,7 +31,7 @@ class BlogPost(db.Model):
     date = db.Column(db.String(250), nullable=False)
     body = db.Column(db.Text, nullable=False)
     img_url = db.Column(db.String(250), nullable=False)
-db.create_all()
+# db.create_all()
 
 
 @app.route('/')
