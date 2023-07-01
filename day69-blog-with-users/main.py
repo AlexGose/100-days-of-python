@@ -62,15 +62,19 @@ def get_all_posts():
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
-        user = User(
-            name=form.name.data,
-            email=form.email.data,
-            password=generate_password_hash(form.password.data, salt_length=4)
-        )
-        db.session.add(user)
-        db.session.commit()
-        login_user(user)
-        return redirect(url_for('get_all_posts'))
+        if not db.session.execute(db.select(User).filter_by(email=form.email.data)).scalars().first():
+            user = User(
+                name=form.name.data,
+                email=form.email.data,
+                password=generate_password_hash(form.password.data, salt_length=4)
+            )
+            db.session.add(user)
+            db.session.commit()
+            login_user(user)
+            return redirect(url_for('get_all_posts'))
+        else:
+            flash("You've already signed up with that email, log in instead!")
+            return redirect(url_for('login'))
     return render_template("register.html", form=form)
 
 
