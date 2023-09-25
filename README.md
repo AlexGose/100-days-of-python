@@ -2,6 +2,8 @@
 
 These are files for select projects from the Udemy [course](https://www.udemy.com/course/100-days-of-code/) "100 Days of Code: The Complete Python Pro Bootcamp for 2023".
 
+Note: while working on the Day 74 section of the course, a new Day 71 section was added on Udemy.  This increased the day number for each of the old sections starting with Day 71.  So, the directories labeled "day71" through "day74" in this repository correspond to days 72 through 75 of the course.
+
 ## Installation
 
 Clone the repository:
